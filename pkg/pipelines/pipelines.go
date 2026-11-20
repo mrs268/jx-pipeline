@@ -377,9 +377,7 @@ func addTaskRunsMessage(pr *v1beta1.PipelineRun, pa *v1.PipelineActivity) {
 		}
 
 		msg = strings.ReplaceAll(msg, "TaskRun", "Stage")
-		// Without this check, there is a panic in the codebase
-		// ToDo(@maintainers): Test case for this
-		if len(pa.Spec.Steps) > k1 {
+		if len(pa.Spec.Steps) > k1 && pa.Spec.Steps[k1].Stage != nil {
 			pa.Spec.Steps[k1].Stage.Message = v1.ActivityMessageType(msg)
 		}
 		k1++
